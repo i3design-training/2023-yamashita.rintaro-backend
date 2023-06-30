@@ -9,5 +9,9 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 abstract class Model extends BaseModel
 {
+    // 主キーをUUIDとする
     use HasUuids;
+
+    // モデルにタイムスタンプをつけない
+    public $timestamps = false;
 }
