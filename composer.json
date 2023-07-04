@@ -6,7 +6,8 @@
         "ramsey/uuid": "^4.7",
         "slim/psr7": "^1.6",
         "slim/slim": "^4.11",
-        "vlucas/phpdotenv": "^5.5"
+        "vlucas/phpdotenv": "^5.5",
+        "robmorgan/phinx": "^0.13.4"
     },
     "autoload": {
         "psr-4": {
