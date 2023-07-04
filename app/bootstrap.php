@@ -1,21 +1,30 @@
 <?php
 
+// 関数呼び出しや戻り値での型の不一致がある場合にエラーを出す
 declare(strict_types=1);
 
+// Composerを使ってインストールしたパッケージやクラスの自動ローディングを有効に
 require __DIR__ . '/../vendor/autoload.php';
 
+// vlucas/phpdotenvパッケージを使って環境変数をロード
 use Dotenv\Dotenv;
+
+// Eloquentを使用するためのクラス
 use Illuminate\Database\Capsule\Manager;
 use Slim\Factory\AppFactory;
 
 $dotenv = Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->safeLoad();
 
+// Slimフレームワークのアプリケーションインスタンスを作成
+// 必要な依存関係（ルートコレクター、ミドルウェアディスパッチャーなど）を自動的にセットアップしてくれる
 $app = AppFactory::create();
 
+// 作成したインスタンスに対してルーティングの設定を行う
 $routes = require __DIR__ . '/routes.php';
 $routes($app);
 
+// Eloquent ORMをセットアップ
 $manager = new Manager();
 $manager->addConnection([
     'driver' => 'pgsql',
@@ -28,4 +37,5 @@ $manager->addConnection([
 ]);
 $manager->bootEloquent();
 
+// 初期化と設定が完了したアプリケーションインスタンスを返す
 return $app;
