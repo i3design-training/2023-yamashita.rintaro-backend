@@ -1,0 +1,10 @@
+[2023-07-05 19:39:52]-[app] INFO: username: りん
+[2023-07-05 19:40:40]-[app] INFO: username: りん
+[2023-07-05 19:41:31]-[app] INFO: username: りん
+[2023-07-05 19:47:04]-[app] INFO: username: {     "username": "りん",     "email": "exam@exam.com",     "password": "password" }
+[2023-07-05 19:52:14]-[app] INFO: username: {     "username": "りん",     "email": "exam@exam.com",     "password": "password" }
+[2023-07-05 19:57:01]-[app] INFO: username: {     "username": "りん",     "email": "exam@exam.com",     "password": "password" }
+[2023-07-05 19:57:08]-[app] INFO: username: {     "username": "りん2",     "email": "exam2@exam.com",     "password": "password" }
+[2023-07-05 19:58:22]-[app] INFO: username: {     "username": "りん3",     "email": "exam3@exam.com",     "password": "password" }
+[2023-07-05 20:00:36]-[app] INFO: username: {     "username": "りん3",     "email": "exam3@exam.com",     "password": "password" }
+[2023-07-05 20:12:42]-[app] INFO: username: {     "username": "りん4",     "email": "exam4@exam.com",     "password": "password" }

@@ -2,32 +2,36 @@
 
 namespace App\Action\User;
 
-use App\Domain\User\Service\UserCreator;
+use App\Models\User;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Log\Log;
 
 class UserCreateAction
 {
-    private $userCreator;
-
-    public function __construct(UserCreator $userCreator)
-    {
-        $this->userCreator = $userCreator;
-    }
-
     public function __invoke(
         ServerRequestInterface $request,
         ResponseInterface $response
     ): ResponseInterface {
         // リクエストからデータを収集
-        $data = (array)$request->getParsedBody();
+        try {
+            $requestBody = $request->getBody()->getContents();
+            $decodedRequestBody = json_decode($requestBody);
 
-        // ユーザーの作成
-        $result = $this->userCreator->createUser($data);
+            Log::info(sprintf('username: %s', $requestBody));
+            $useCaseRequest = User::create(
+                [
+                    'username' => $decodedRequestBody->username,
+                    'password' => $decodedRequestBody->password,
+                    'email' => $decodedRequestBody->email
+                ]
+            );
 
-        // JSONレスポンスを作成
-        $response->getBody()->write((string)json_encode($result));
-
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
+            $response->getBody()->write("New user registered successfully");
+            return $response;
+        } catch (\Exception $e) {
+            $response->getBody()->write("Error: " . $e->getMessage());
+            return $response->withStatus(500);
+        }
     }
 }

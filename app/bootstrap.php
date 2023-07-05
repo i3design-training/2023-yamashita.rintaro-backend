@@ -17,10 +17,6 @@ use Slim\Factory\AppFactory;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
-use DI\ContainerBuilder;
-use App\Domain\User\Service\UserCreator;
-use App\Domain\User\Repository\UserCreatorRepository;
-
 date_default_timezone_set("Asia/Tokyo");
 
 $dotenv = Dotenv::createImmutable(__DIR__ . '/..');
