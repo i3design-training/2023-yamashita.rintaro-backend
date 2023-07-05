@@ -13,6 +13,16 @@ use Dotenv\Dotenv;
 use Illuminate\Database\Capsule\Manager;
 use Slim\Factory\AppFactory;
 
+// logを使うためのライブラリ
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+use DI\ContainerBuilder;
+use App\Domain\User\Service\UserCreator;
+use App\Domain\User\Repository\UserCreatorRepository;
+
+date_default_timezone_set("Asia/Tokyo");
+
 $dotenv = Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->safeLoad();
 
@@ -36,6 +46,16 @@ $manager->addConnection([
     'prefix' => '',
 ]);
 $manager->bootEloquent();
+
+// Monologのセットアップ
+$log = new Logger('app');
+$log->pushHandler(new StreamHandler(__DIR__ . '/../logs/app.log', Logger::DEBUG));
+
+// ロガーをコンテナに追加する
+$container = $app->getContainer();
+$container['logger'] = function ($c) use ($log) {
+    return $log;
+};
 
 // 初期化と設定が完了したアプリケーションインスタンスを返す
 return $app;

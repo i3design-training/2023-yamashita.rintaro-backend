@@ -13,7 +13,7 @@ return function (App $app) {
 
     $app->group('/api', function (Group $group) {
         $group->post('/users/register', \App\Action\User\UserCreateAction::class);
-        $group->post('/users', \App\Action\UserCreateAction::class);
+        $group->post('/users/login', \App\Action\User\UserLoginAction::class);
         $group->put('/users/{id}', \App\Action\UserUpdateAction::class);
         $group->delete('/users/{id}', \App\Action\UserDeleteAction::class);
     });

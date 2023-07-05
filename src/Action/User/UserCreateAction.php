@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Action;
+namespace App\Action\User;
 
 use App\Domain\User\Service\UserCreator;
 use Psr\Http\Message\ResponseInterface;
