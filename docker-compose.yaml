@@ -1,0 +1,23 @@
+version: "3.9"
+# サービス (コンテナ) を定義
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    # 環境変数を設定
+    environment:
+      - POSTGRES_USER=todo
+      - POSTGRES_PASSWORD=todo
+      - POSTGRES_DB=todo
+    # データの永続化
+    volumes:
+      # postgresディレクトリを/var/lib/postgresql/dataにマウント
+      # /var/lib/postgresql/data は、PostgreSQLコンテナ内でデータベースのデータを保存する場所として使用される
+      # マウントとは、ホスト側（コンテナの外）にあるディレクトリ・ファイルを、コンテナの中から利用できるようにすること
+      - ./postgres_data:/var/lib/postgresql/data
+
+      # ./create_databaseをコンテナ内の /docker-entrypoint-initdb.d にマウント
+      # /docker-entrypoint-initdb.d/ に初期化用のSQLを置くことで、最初に image を起動したときにデータの初期化を自動的に行う
+      - ./create_database:/docker-entrypoint-initdb.d
+    ports:
+      - 5432:5432
