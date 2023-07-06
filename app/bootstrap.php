@@ -45,10 +45,8 @@ $app->add(function ($request, $handler) {
     return $response
         // どのオリジンからのリソースへのアクセスを許可するかを指定
         ->withHeader('Access-Control-Allow-Origin', '*')
-
         // リクエストに含めることが許可されているHTTPヘッダーを指定
         ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-
         // 許可されるHTTPメソッドを指定
         ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 });
