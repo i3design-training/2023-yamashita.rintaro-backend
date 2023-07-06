@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Log\Log;
 
-class UserCreateAction
+class UserFullRegistrationAction
 {
     public function __invoke(
         ServerRequestInterface $request,

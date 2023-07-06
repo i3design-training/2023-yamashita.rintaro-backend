@@ -14,3 +14,39 @@
 [2023-07-06 09:55:52]-[app] INFO: username: {"username":"山田太郎3","email":"exam5@example.com","password":"aaaaaaaa"}
 [2023-07-06 09:59:49]-[app] INFO: username: {"username":"山田太郎3","email":"exam5@example.com","password":"aaaaaaaa"}
 [2023-07-06 10:06:15]-[app] INFO: username: {"username":"山田太郎4","email":"exam6@example.com","password":"aaaaaaaa"}
+[2023-07-06 14:15:47]-[app] INFO: username: {     "username": "りん4",     "email": "exam4@exam.com",     "password": "password" }
+[2023-07-06 14:34:22]-[app] INFO: username: {     "username": "りん6",     "email": "exam6@exam.com",     "password": "password" }
+[2023-07-06 15:04:32]-[app] INFO: username: {     "username": "りん7",     "email": "exam7@exam.com",     "password": "password" }
+[2023-07-06 15:22:43]-[app] INFO: username: {     "username": "りん8",     "email": "exam8@exam.com",     "password": "password" }
+[2023-07-06 15:32:34]-[app] INFO: username: {     "username": "りん9",     "email": "exam9@exam.com",     "password": "password" }
+[2023-07-06 15:35:03]-[app] INFO: username: {     "username": "りん10",     "email": "exam10@exam.com",     "password": "password" }
+[2023-07-06 15:43:24]-[app] INFO: username: {     "username": "りん11",     "email": "exam11@exam.com",     "password": "password" }
+[2023-07-06 15:44:14]-[app] INFO: username: {     "username": "りん12",     "email": "exam12@exam.com",     "password": "password" }
+[2023-07-06 15:46:36]-[app] INFO: 送信開始
+[2023-07-06 15:47:19]-[app] INFO: 送信開始
+[2023-07-06 15:47:19]-[app] INFO: SMTP設定完了
+[2023-07-06 15:48:03]-[app] INFO: 送信開始
+[2023-07-06 15:48:03]-[app] INFO: SMTP設定完了
+[2023-07-06 15:48:03]-[app] INFO: 受信者設定完了
+[2023-07-06 15:48:27]-[app] INFO: 送信開始
+[2023-07-06 15:48:27]-[app] INFO: SMTP設定完了
+[2023-07-06 15:48:27]-[app] INFO: 受信者設定完了
+[2023-07-06 15:49:58]-[app] INFO: 送信開始
+[2023-07-06 15:49:58]-[app] INFO: SMTP設定完了
+[2023-07-06 15:51:16]-[app] INFO: 送信開始
+[2023-07-06 15:51:16]-[app] INFO: SMTP設定完了
+[2023-07-06 15:51:16]-[app] INFO: 受信者設定完了
+[2023-07-06 15:53:49]-[app] INFO: 送信開始
+[2023-07-06 15:53:49]-[app] INFO: 受信者設定完了
+[2023-07-06 16:43:21]-[app] INFO: 送信開始
+[2023-07-06 16:43:21]-[app] INFO: 受信者設定完了
+[2023-07-06 16:45:44]-[app] INFO: 送信開始
+[2023-07-06 16:45:44]-[app] INFO: 受信者設定完了
+[2023-07-06 16:46:33]-[app] INFO: 送信開始
+[2023-07-06 16:46:33]-[app] INFO: 受信者設定完了
+[2023-07-06 16:48:30]-[app] INFO: 送信開始
+[2023-07-06 16:48:30]-[app] INFO: 受信者設定完了
+[2023-07-06 16:48:34]-[app] INFO: 送信完了
+[2023-07-06 16:49:30]-[app] INFO: 送信開始
+[2023-07-06 16:49:30]-[app] INFO: 受信者設定完了
+[2023-07-06 16:49:34]-[app] INFO: 送信完了
