@@ -26,6 +26,29 @@ $dotenv->safeLoad();
 // 必要な依存関係（ルートコレクター、ミドルウェアディスパッチャーなど）を自動的にセットアップしてくれる
 $app = AppFactory::create();
 
+// CORSのプリフライトリクエストに対応する
+// プリフライトリクエストとは、実際のリクエストを行う前にブラウザが送る特殊なリクエストで、
+// サーバーがその後の実際のリクエストを受け入れられるかどうかを確認するためのもの。
+// OPTIONSメソッドを使って行われる
+$app->options('/{routes:.+}', function ($request, $response) {
+    return $response;
+});
+
+// CORSヘッダの設定を行うミドルウェアを追加
+$app->add(function ($request, $handler) {
+    // $nextの代わりに、次のミドルウェアを処理するための$handlerを使用する
+    $response = $handler->handle($request);
+    return $response
+        // どのオリジンからのリソースへのアクセスを許可するかを指定
+        ->withHeader('Access-Control-Allow-Origin', '*')
+
+        // リクエストに含めることが許可されているHTTPヘッダーを指定
+        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+
+        // 許可されるHTTPメソッドを指定
+        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+});
+
 // 作成したインスタンスに対してルーティングの設定を行う
 $routes = require __DIR__ . '/routes.php';
 $routes($app);
