@@ -12,3 +12,5 @@
 [2023-07-06 09:51:00]-[app] INFO: username: {"name":"山田太郎","email":"aaaaaaaa","password":"aaaaaaaa"}
 [2023-07-06 09:51:45]-[app] INFO: username: {"name":"山田太郎2","email":"exam4@example.com","password":"aaaaaaaa"}
 [2023-07-06 09:55:52]-[app] INFO: username: {"username":"山田太郎3","email":"exam5@example.com","password":"aaaaaaaa"}
+[2023-07-06 09:59:49]-[app] INFO: username: {"username":"山田太郎3","email":"exam5@example.com","password":"aaaaaaaa"}
+[2023-07-06 10:06:15]-[app] INFO: username: {"username":"山田太郎4","email":"exam6@example.com","password":"aaaaaaaa"}

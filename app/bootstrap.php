@@ -19,7 +19,10 @@ use Monolog\Handler\StreamHandler;
 
 date_default_timezone_set("Asia/Tokyo");
 
+// Dotenv::createImmutableメソッドを使用してimmutableなdotenvオブジェクトを生成
+// __DIR__は現在のスクリプトのディレクトリへの絶対パスを示す特殊な定数で、その後に '/../'を付けることで親ディレクトリのパスを指定している。
 $dotenv = Dotenv::createImmutable(__DIR__ . '/..');
+// .envファイル）をロードし、その中の環境変数をシステムの環境変数にセット
 $dotenv->safeLoad();
 
 // Slimフレームワークのアプリケーションインスタンスを作成
@@ -27,9 +30,10 @@ $dotenv->safeLoad();
 $app = AppFactory::create();
 
 // CORSのプリフライトリクエストに対応する
-// プリフライトリクエストとは、実際のリクエストを行う前にブラウザが送る特殊なリクエストで、
-// サーバーがその後の実際のリクエストを受け入れられるかどうかを確認するためのもの。
-// OPTIONSメソッドを使って行われる
+// プリフライトリクエスト
+//      実際のリクエストを行う前にブラウザが送る特殊なリクエストで、
+//      サーバーがその後の実際のリクエストを受け入れられるかどうかを確認するためのもの。
+//      OPTIONSメソッドを使って行われる
 $app->options('/{routes:.+}', function ($request, $response) {
     return $response;
 });
@@ -49,7 +53,7 @@ $app->add(function ($request, $handler) {
         ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 });
 
-// 作成したインスタンスに対してルーティングの設定を行う
+// 作成した$appインスタンスに対してルーティングの設定を行う
 $routes = require __DIR__ . '/routes.php';
 $routes($app);
 
