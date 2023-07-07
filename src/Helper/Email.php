@@ -8,7 +8,7 @@ use Log\Log;
 
 class Email
 {
-	public static function sendEmail(string $email, string $subject, string $body): array
+	public static function sendEmail(string $email, string $subject, string $body, string $token): array
 	{
 		//言語、内部エンコーディングを指定
 		mb_language("japanese");
@@ -45,7 +45,7 @@ class Email
 			//メール表題（文字エンコーディングを変換）
 			$mail->Subject = mb_encode_mimeheader($subject);
 			//HTML形式の本文（文字エンコーディングを変換）
-			$mail->Body  = mb_convert_encoding($body, "JIS", "UTF-8");
+			$mail->Body  = mb_convert_encoding($body . "\n" . $token, "JIS", "UTF-8");
 
 			$mail->send();
 

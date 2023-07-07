@@ -3,6 +3,7 @@
 namespace App\Action\User;
 
 use App\Helper\Email;
+use App\Helper\CreateToken;
 use App\Models\User;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
@@ -27,8 +28,16 @@ class UserProvisionalRegistrationAction
                 ]
             );
 
+            // メールのリンクを押したらemailVerificationカラムをtrueにする処理はどこのファイルで行うべき？
+            //      UserFullRegistration.phpで行う
+            // emailVerifiedToken = bin2hex(random_bytes(32));はHelperで問題なさそう
+            // emailVerifiedTokenをインポートしてきて、sendEmailの引数として送信する
+
+            $subject = "ユーザ仮登録完了通知";
+            $body = 'ユーザ仮登録が完了しました。以下のURLから本登録を完了してください。';
+
             // 本登録メールの送信
-            Email::sendEmail($decodedRequestBody->email, "ユーザ仮登録完了通知", 'ユーザ仮登録が完了しました。以下のURLから本登録を完了してください。');
+            Email::sendEmail($decodedRequestBody->email, $subject, $body, CreateToken::createToken());
 
             $response->getBody()->write("New user registered successfully");
             return $response;
