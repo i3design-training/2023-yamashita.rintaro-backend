@@ -15,6 +15,8 @@ class User extends Model
 	public $incrementing = false;
 	protected $fillable = ['id', 'username', 'email', 'password', 'email_verified', 'created_at', 'updated_at'];
 
-
-	public $timestamps = false;
+	public function emailVerification()
+	{
+		return $this->hasOne('App\Models\EmailVerification');
+	}
 }

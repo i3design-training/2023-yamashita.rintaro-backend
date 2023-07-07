@@ -18,7 +18,6 @@ class UserFullRegistrationAction
             $requestBody = $request->getBody()->getContents();
             $decodedRequestBody = json_decode($requestBody);
 
-            Log::info(sprintf('username: %s', $requestBody));
             $useCaseRequest = User::create(
                 [
                     'username' => $decodedRequestBody->username,
