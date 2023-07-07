@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
+// 注意❗️
+// ログイン後の認証トークンを保存する
+// メール認証のトークンではない
 class Token extends Model
 {
 	// 主キーが UUID であることを Eloquent に認識させる
