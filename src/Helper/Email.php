@@ -34,7 +34,7 @@ class Email
 
 			$mail->SMTPDebug = 2;
 
-			$url = 'http://localhost:8000/api/users/fullRegistration?token=' . $token;
+			$url = 'http://localhost:5173/registrationComplete?token=' . $token;
 
 			//受信者設定 
 			//※名前などに日本語を使う場合は文字エンコーディングを変換

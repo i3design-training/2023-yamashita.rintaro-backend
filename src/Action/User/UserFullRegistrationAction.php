@@ -30,11 +30,6 @@ class UserFullRegistrationAction
             // $tokenと一致するemail_verificationsを取得
             $emailVerification = EmailVerification::where('token', $token)->first();
 
-            // $tokenが一致しない場合は例外を投げる
-            if ($token !== $emailVerification->getToken()) {
-                throw new \Exception('tokenが一致しません');
-            }
-
             $user = User::where('id', $emailVerification->user_id)->first();
             $user->email_verified = true;
             $user->save();
