@@ -13,16 +13,52 @@ use Dotenv\Dotenv;
 use Illuminate\Database\Capsule\Manager;
 use Slim\Factory\AppFactory;
 
+// logを使うためのライブラリ
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Slim\Exception\HttpNotFoundException;
+
+date_default_timezone_set("Asia/Tokyo");
+
+// Dotenv::createImmutableメソッドを使用してimmutableなdotenvオブジェクトを生成
+// __DIR__は現在のスクリプトのディレクトリへの絶対パスを示す特殊な定数で、その後に '/../'を付けることで親ディレクトリのパスを指定している。
 $dotenv = Dotenv::createImmutable(__DIR__ . '/..');
+// .envファイル）をロードし、その中の環境変数をシステムの環境変数にセット
 $dotenv->safeLoad();
 
 // Slimフレームワークのアプリケーションインスタンスを作成
 // 必要な依存関係（ルートコレクター、ミドルウェアディスパッチャーなど）を自動的にセットアップしてくれる
 $app = AppFactory::create();
 
-// 作成したインスタンスに対してルーティングの設定を行う
+// CORSのプリフライトリクエストに対応する
+// プリフライトリクエスト
+//      実際のリクエストを行う前にブラウザが送る特殊なリクエストで、
+//      サーバーがその後の実際のリクエストを受け入れられるかどうかを確認するためのもの。
+//      OPTIONSメソッドを使って行われる
+$app->options('/{routes:.+}', function ($request, $response) {
+    return $response;
+});
+
+// CORSヘッダの設定を行うミドルウェアを追加
+$app->add(function ($request, $handler) {
+    // $nextの代わりに、次のミドルウェアを処理するための$handlerを使用する
+    $response = $handler->handle($request);
+    return $response
+        // どのオリジンからのリソースへのアクセスを許可するかを指定
+        ->withHeader('Access-Control-Allow-Origin', '*')
+        // リクエストに含めることが許可されているHTTPヘッダーを指定
+        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+        // 許可されるHTTPメソッドを指定
+        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+});
+
+// 作成した$appインスタンスに対してルーティングの設定を行う
 $routes = require __DIR__ . '/routes.php';
 $routes($app);
+
+$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
+    throw new HttpNotFoundException($request);
+});
 
 // Eloquent ORMをセットアップ
 $manager = new Manager();
@@ -36,6 +72,16 @@ $manager->addConnection([
     'prefix' => '',
 ]);
 $manager->bootEloquent();
+
+// Monologのセットアップ
+$log = new Logger('app');
+$log->pushHandler(new StreamHandler(__DIR__ . '/../logs/app.log', Logger::DEBUG));
+
+// ロガーをコンテナに追加する
+$container = $app->getContainer();
+$container['logger'] = function ($c) use ($log) {
+    return $log;
+};
 
 // 初期化と設定が完了したアプリケーションインスタンスを返す
 return $app;
