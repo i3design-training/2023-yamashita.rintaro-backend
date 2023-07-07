@@ -12,8 +12,9 @@ return function (App $app) {
     $app->get('/hello/{name}', \App\Action\HelloAction::class)->setName('hello');
 
     $app->group('/api', function (Group $group) {
+        $group->get('/helloworld', \App\Action\User\HelloWorldAction::class);
         $group->post('/users/provisionalRegister', \App\Action\User\UserProvisionalRegistrationAction::class);
-        $group->post('/users/fullRegistration', \App\Action\User\UserFullRegistrationAction::class);
+        $group->get('/users/fullRegistration', \App\Action\User\UserFullRegistrationAction::class);
         $group->post('/users/login', \App\Action\User\UserLoginAction::class);
         $group->put('/users/{id}', \App\Action\UserUpdateAction::class);
         $group->delete('/users/{id}', \App\Action\UserDeleteAction::class);

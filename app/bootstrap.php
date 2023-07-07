@@ -16,6 +16,7 @@ use Slim\Factory\AppFactory;
 // logを使うためのライブラリ
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Slim\Exception\HttpNotFoundException;
 
 date_default_timezone_set("Asia/Tokyo");
 
@@ -54,6 +55,10 @@ $app->add(function ($request, $handler) {
 // 作成した$appインスタンスに対してルーティングの設定を行う
 $routes = require __DIR__ . '/routes.php';
 $routes($app);
+
+$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
+    throw new HttpNotFoundException($request);
+});
 
 // Eloquent ORMをセットアップ
 $manager = new Manager();

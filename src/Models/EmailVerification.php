@@ -20,6 +20,16 @@ class EmailVerification extends Model
 
 	protected $fillable = ['user_id', 'token'];
 
+	public function getToken()
+	{
+		return $this->token;
+	}
+
+	public function getUserId()
+	{
+		return $this->user_id;
+	}
+
 	public function user()
 	{
 		return $this->belongsTo('App\Models\User');

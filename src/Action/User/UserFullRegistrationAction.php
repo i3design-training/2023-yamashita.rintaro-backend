@@ -2,6 +2,7 @@
 
 namespace App\Action\User;
 
+use App\Models\EmailVerification;
 use App\Models\User;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -13,24 +14,53 @@ class UserFullRegistrationAction
         ServerRequestInterface $request,
         ResponseInterface $response
     ): ResponseInterface {
-        // リクエストからデータを収集
         try {
-            $requestBody = $request->getBody()->getContents();
-            $decodedRequestBody = json_decode($requestBody);
+            Log::debug(sprintf('本登録開始'));
 
-            $useCaseRequest = User::create(
-                [
-                    'username' => $decodedRequestBody->username,
-                    'password' => $decodedRequestBody->password,
-                    'email' => $decodedRequestBody->email
-                ]
-            );
+            // getQueryParams: クエリパラメーターを連想配列として取得
+            $queryParams = $request->getQueryParams();
+            // トークンが存在するか確認する
+            if (!isset($queryParams['token'])) {
+                throw new \InvalidArgumentException('トークンが存在しません', 400);
+            }
 
-            $response->getBody()->write("New user registered successfully");
-            return $response;
+            $token = $queryParams['token'];
+            Log::debug(sprintf('トークン: %s', $token));
+
+            // $tokenと一致するemail_verificationsを取得
+            $emailVerification = EmailVerification::where('token', $token)->first();
+
+            // $tokenが一致しない場合は例外を投げる
+            if ($token !== $emailVerification->getToken()) {
+                throw new \Exception('tokenが一致しません');
+            }
+
+            $user = User::where('id', $emailVerification->user_id)->first();
+            $user->email_verified = true;
+            $user->save();
+
+            // JSON_UNESCAPED_UNICODE: Unicode文字（日本語など）をエスケープさせない
+            $response->getBody()->write(json_encode(['status' => 'success'], JSON_UNESCAPED_UNICODE));
+
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(200);
+        } catch (\InvalidArgumentException $e) {
+            Log::error($e->getMessage());
+
+            $response->getBody()->write(json_encode(['error' => $e->getMessage()], JSON_UNESCAPED_UNICODE));
+
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(400);
         } catch (\Exception $e) {
-            $response->getBody()->write("Error: " . $e->getMessage());
-            return $response->withStatus(500);
+            Log::error($e->getMessage());
+
+            $response->getBody()->write(json_encode(['error' => $e->getMessage()], JSON_UNESCAPED_UNICODE));
+
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(500);
         }
     }
 }

@@ -34,6 +34,8 @@ class Email
 
 			$mail->SMTPDebug = 2;
 
+			$url = 'http://localhost:8000/api/users/fullRegistration?token=' . $token;
+
 			//受信者設定 
 			//※名前などに日本語を使う場合は文字エンコーディングを変換
 			//差出人アドレス, 差出人名
@@ -45,7 +47,7 @@ class Email
 			//メール表題（文字エンコーディングを変換）
 			$mail->Subject = mb_encode_mimeheader($subject);
 			//HTML形式の本文（文字エンコーディングを変換）
-			$mail->Body  = mb_convert_encoding($body . "\n" . $token, "JIS", "UTF-8");
+			$mail->Body  = mb_convert_encoding($body . "\n" . $url, "JIS", "UTF-8");
 
 			$mail->send();
 
