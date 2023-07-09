@@ -2,11 +2,12 @@
 
 namespace App\Action\User;
 
-use App\Models\EmailVerification;
+use App\Models\Token;
 use App\Models\User;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Log\Log;
+use Firebase\JWT\JWT;
 
 class UserLoginAction
 {
@@ -15,37 +16,46 @@ class UserLoginAction
 		ResponseInterface $response
 	): ResponseInterface {
 		try {
-			// getBody(): ストリームとしてリクエストボディを取得
-			// getContents(): ストリームの現在の位置から残りのすべてのデータを文字列として返す
-			// ストリーム
-			// 		データを連続的に、かつ一度に一部ずつ処理する仕組み
-			// 		大きなファイルの操作、ネットワーク通信、パイプライン処理などに有効
 			$requestBody = $request->getBody()->getContents();
-
-			// json_decode: JSON文字列をオブジェクトに変換
-			// オブジェクトに変換しないと、リクエストボディのデータはただの文字列として扱われてデータにアクセスできない
-			// JSON文字列例）"{\"email\":\"example@example.com\",\"password\":\"examplepassword\"}"
 			$decodedRequestBody = json_decode($requestBody);
 
-			// 入力値の検証
 			if ($decodedRequestBody === null || !isset($decodedRequestBody->email) || !isset($decodedRequestBody->password)) {
 				throw new \InvalidArgumentException('無効な入力データ');
 			}
 
 			Log::debug(sprintf('ログイン処理開始'));
 
-			// リクエストのemailをもとに、ユーザーを取得する
 			$user = User::where('email', $decodedRequestBody->email)->first();
 
-			// ユーザーのpasswordとリクエストのpasswordが一致するかチェック
 			if (!$user || !$user->verifyPassword($decodedRequestBody->password)) {
 				throw new \InvalidArgumentException('認証に失敗しました');
 			}
 
-			// 認証token作成
-			// ユーザIDと秘密鍵より、Tokenを生成する
+			// PHP-JWTを使ってJWTを生成
+			$now = time();
+			$payload = array(
+				"iat" => $now, // 発行時間
+				"nbf" => $now, // 有効開始時間
+				"exp" => $now + (60 * 60 * 24), // 有効終了時間
+				"data" => ["userId" => $user->id]
+			);
 
-			// ユーザにTokenを返す
+			$jwt = JWT::encode($payload, $_ENV['JWT_SECRET_KEY'], 'HS256');
+
+			// 新しいTokenモデルを作成し、生成したJWTを保存
+			Token::updateOrCreate(
+				['user_id' => $user->id],
+				[
+					'token' => $jwt,
+					'expiry_date' => date('Y-m-d H:i:s', strtotime('+1 day'))
+				]
+			);
+
+			$response->getBody()->write(
+				json_encode([
+					'token' => $jwt,
+				])
+			);
 
 			$response->getBody()->write(json_encode('認証成功'));
 

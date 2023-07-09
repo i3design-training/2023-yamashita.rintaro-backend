@@ -21,6 +21,11 @@ class User extends Model
 		return password_verify($password, $this->password);
 	}
 
+	public function token()
+	{
+		return $this->hasOne('App\Models\Token');
+	}
+
 	public function emailVerification()
 	{
 		return $this->hasOne('App\Models\EmailVerification');
