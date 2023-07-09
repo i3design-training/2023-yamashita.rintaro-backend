@@ -31,16 +31,7 @@ class UserLoginAction
 				throw new \InvalidArgumentException('認証に失敗しました');
 			}
 
-			// PHP-JWTを使ってJWTを生成
-			$now = time();
-			$payload = array(
-				"iat" => $now, // 発行時間
-				"nbf" => $now, // 有効開始時間
-				"exp" => $now + (60 * 60 * 24), // 有効終了時間
-				"data" => ["userId" => $user->id]
-			);
-
-			$jwt = JWT::encode($payload, $_ENV['JWT_SECRET_KEY'], 'HS256');
+			$jwt = $this->generateJWT($user->id);
 
 			// 新しいTokenモデルを作成し、生成したJWTを保存
 			Token::updateOrCreate(
@@ -53,11 +44,9 @@ class UserLoginAction
 
 			$response->getBody()->write(
 				json_encode([
-					'token' => $jwt,
+					'token' => $jwt
 				])
 			);
-
-			$response->getBody()->write(json_encode('認証成功'));
 
 			return $response
 				->withHeader('Content-Type', 'application/json')
@@ -79,5 +68,27 @@ class UserLoginAction
 				->withHeader('Content-Type', 'application/json')
 				->withStatus(500);
 		}
+	}
+
+
+	private function generateJWT($userId)
+	{
+		$now = time();
+
+		// Payload: 実際に送信するデータ
+		$payload = array(
+			"iat" => $now, // 発行時間
+			"nbf" => $now, // 有効開始時間
+			"exp" => $now + (60 * 60 * 24), // 有効終了時間
+			"data" => ["userId" => $userId]
+		);
+
+		/**
+		 * JWT（Json Web Token）を生成。以下の3つの引数を取る。
+		 * @param array|object $payload トークンに含めるデータ（クレーム）
+		 * @param string $_ENV['JWT_SECRET_KEY'] トークンの署名に使用される秘密鍵
+		 * @param string 'HS256' トークンの署名に使用するハッシュアルゴリズムを指定
+		 */
+		return JWT::encode($payload, $_ENV['JWT_SECRET_KEY'], 'HS256');
 	}
 }
