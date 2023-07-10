@@ -27,7 +27,7 @@ class Token extends Model
 
 	// 配列内のカラム以外の値は弾く
 	// この配列内のカラムは、一括代入（Mass Assignment）が可能
-	protected $fillable = ['id', 'user_id', 'token', 'expiry_date'];
+	protected $fillable = ['user_id', 'token', 'expiry_date'];
 
 	public function user()
 	{

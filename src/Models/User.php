@@ -15,6 +15,17 @@ class User extends Model
 	public $incrementing = false;
 	protected $fillable = ['id', 'username', 'email', 'password', 'email_verified', 'created_at', 'updated_at'];
 
+	public function verifyPassword(string $password): bool
+	{
+		// password_verify: パスワードがハッシュにマッチするかどうかを調べる
+		return password_verify($password, $this->password);
+	}
+
+	public function token()
+	{
+		return $this->hasOne('App\Models\Token');
+	}
+
 	public function emailVerification()
 	{
 		return $this->hasOne('App\Models\EmailVerification');
