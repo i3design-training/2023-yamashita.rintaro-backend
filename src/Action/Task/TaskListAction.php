@@ -1,23 +1,21 @@
 <?php
 
-namespace App\Action\User;
+namespace App\Action\Task;
 
 use App\Models\User;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Log\Log;
 
-class UserLoginAction
+class TaskListAction
 {
 	public function __invoke(
 		ServerRequestInterface $request,
 		ResponseInterface $response
 	): ResponseInterface {
 		try {
-			$requestBody = $request->getBody()->getContents();
-			$decodedRequestBody = json_decode($requestBody);
-
-			$user = User::where('id', $decodedRequestBody->userId)->first();
+			$userId = $request->getQueryParams()['userId'];
+			$user = User::where('id', $userId)->first();
 
 			if (!$user) {
 				throw new \InvalidArgumentException('User not found');
@@ -25,7 +23,7 @@ class UserLoginAction
 
 			$tasks = $user->tasks;
 
-			$response->getBody()->write(json_encode(['tasks' => $tasks], JSON_UNESCAPED_UNICODE));
+			$response->getBody()->write(json_encode($tasks));
 
 			return $response
 				->withHeader('Content-Type', 'application/json')

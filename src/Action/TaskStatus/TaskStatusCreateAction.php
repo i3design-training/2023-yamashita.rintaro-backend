@@ -24,7 +24,7 @@ class TaskStatusCreateAction
 				]
 			);
 
-			$response->getBody()->write("TaskStatus登録が成功しました");
+			$response->getBody()->write("TaskStatus作成完了");
 			return $response->withStatus(201);
 		} catch (\InvalidArgumentException $e) {
 			Log::error('無効な入力データ: ' . $e->getMessage());

@@ -31,7 +31,7 @@ class User extends Model
 		return $this->hasOne('App\Models\EmailVerification');
 	}
 
-	public function task()
+	public function tasks()
 	{
 		return $this->hasMany('App\Models\Task');
 	}

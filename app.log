@@ -284,3 +284,12 @@
 [2023-07-11 11:32:54]-[app] ERROR: エラー: SQLSTATE[23502]: Not null violation: 7 ERROR:  null value in column "user_id" of relation "tasks" violates not-null constraint DETAIL:  Failing row contains (999e1775-b9c4-44f1-a538-901fd2075a8c, null, 999dfe0f-e7c8-448b-9c19-2c3bd28db4fe, todo, todo, 2023-07-11, 999e02d9-e953-4ff6-bdf1-c3c0f736c84c, 2023-07-11 11:32:54, 2023-07-11 11:32:54). (Connection: default, SQL: insert into "tasks" ("title", "description", "due_date", "status_id", "category_id", "id", "updated_at", "created_at") values (todo, todo, 2023-07-11 11:24:28, 999e02d9-e953-4ff6-bdf1-c3c0f736c84c, 999dfe0f-e7c8-448b-9c19-2c3bd28db4fe, 999e1775-b9c4-44f1-a538-901fd2075a8c, 2023-07-11 11:32:54, 2023-07-11 11:32:54))
 [2023-07-11 11:35:18]-[app] INFO: タスク作成開始
 [2023-07-11 11:36:12]-[app] INFO: タスク作成開始
+[2023-07-11 16:22:56]-[app] ERROR: エラー: SQLSTATE[23502]: Not null violation: 7 ERROR:  null value in column "name" of relation "categories" violates not-null constraint DETAIL:  Failing row contains (999e7f2f-5c83-45bc-a907-e066f9ed7037, null). (Connection: default, SQL: insert into "categories" ("name", "id") values (?, 999e7f2f-5c83-45bc-a907-e066f9ed7037))
+[2023-07-11 16:23:52]-[app] ERROR: エラー: SQLSTATE[23502]: Not null violation: 7 ERROR:  null value in column "name" of relation "categories" violates not-null constraint DETAIL:  Failing row contains (999e7f83-89a8-43c8-a908-ae6dcc3c46b3, null). (Connection: default, SQL: insert into "categories" ("name", "id") values (?, 999e7f83-89a8-43c8-a908-ae6dcc3c46b3))
+[2023-07-11 17:04:01]-[app] DEBUG: ログイン処理開始
+[2023-07-11 17:09:40]-[app] ERROR: User not found
+[2023-07-11 17:09:40]-[app] ERROR: User not found
+[2023-07-11 17:10:31]-[app] ERROR: User not found
+[2023-07-11 17:10:33]-[app] ERROR: User not found
+[2023-07-11 17:10:54]-[app] ERROR: User not found
+[2023-07-11 17:14:43]-[app] INFO: タスク作成開始

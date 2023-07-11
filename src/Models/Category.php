@@ -13,7 +13,7 @@ class Category extends Model
 	protected $table = 'categories';
 	protected $keyType = 'string';
 	public $incrementing = false;
-	protected $fillable = ['id', 'name'];
+	protected $fillable = ['name'];
 
 	public function task()
 	{
