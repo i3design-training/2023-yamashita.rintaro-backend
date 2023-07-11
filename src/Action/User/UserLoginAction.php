@@ -44,7 +44,8 @@ class UserLoginAction
 
 			$response->getBody()->write(
 				json_encode([
-					'token' => $jwt
+					'token' => $jwt,
+					'user_id' => $user->id
 				])
 			);
 
