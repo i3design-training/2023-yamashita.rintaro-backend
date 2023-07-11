@@ -17,5 +17,23 @@ return function (App $app) {
         $group->post('/users/login', \App\Action\User\UserLoginAction::class);
         $group->put('/users/{id}', \App\Action\UserUpdateAction::class);
         $group->delete('/users/{id}', \App\Action\UserDeleteAction::class);
+
+        $group->group('/tasks', function (Group $group) {
+            $group->get('', \App\Action\Task\TaskListAction::class);
+            $group->post('/create', \App\Action\Task\TaskCreateAction::class);
+            $group->get('/{id}', \App\Action\Task\TaskReadAction::class);
+            $group->put('/{id}/edit', \App\Action\Task\TaskUpdateAction::class);
+            $group->delete('/delete', \App\Action\Task\TaskDeleteAction::class);
+        });
+
+        $group->group('/categories', function (Group $group) {
+            $group->get('', \App\Action\Category\CategoryListAction::class);
+            $group->post('/create', \App\Action\Category\CategoryCreateAction::class);
+        });
+
+        $group->group('/taskstatus', function (Group $group) {
+            $group->get('', \App\Action\TaskStatus\TaskStatusListAction::class);
+            $group->post('/create', \App\Action\TaskStatus\TaskStatusCreateAction::class);
+        });
     });
 };

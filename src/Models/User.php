@@ -30,4 +30,14 @@ class User extends Model
 	{
 		return $this->hasOne('App\Models\EmailVerification');
 	}
+
+	public function tasks()
+	{
+		return $this->hasMany('App\Models\Task');
+	}
+
+	public function getAllTasks()
+	{
+		return $this->tasks()->get();
+	}
 }
