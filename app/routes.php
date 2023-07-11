@@ -30,5 +30,10 @@ return function (App $app) {
             $group->get('', \App\Action\Category\CategoryListAction::class);
             $group->post('/create', \App\Action\Category\CategoryCreateAction::class);
         });
+
+        $group->group('/taskstatus', function (Group $group) {
+            $group->get('', \App\Action\TaskStatus\TaskStatusListAction::class);
+            $group->post('/create', \App\Action\TaskStatus\TaskStatusCreateAction::class);
+        });
     });
 };

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Action\Category;
+namespace App\Action\TaskStatus;
 
-use App\Models\Category;
+use App\Models\TaskStatus;
 use Log\Log;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class CategoryCreateAction
+class TaskStatusCreateAction
 {
 	public function __invoke(
 		ServerRequestInterface $request,
@@ -18,13 +18,13 @@ class CategoryCreateAction
 			$requestBody = $request->getBody()->getContents();
 			$decodedRequestBody = json_decode($requestBody);
 
-			$newCategory = Category::create(
+			$newTaskStatus = TaskStatus::create(
 				[
 					'name' => $decodedRequestBody->name
 				]
 			);
 
-			$response->getBody()->write("カテゴリー登録が成功しました");
+			$response->getBody()->write("TaskStatus登録が成功しました");
 			return $response->withStatus(201);
 		} catch (\InvalidArgumentException $e) {
 			Log::error('無効な入力データ: ' . $e->getMessage());
