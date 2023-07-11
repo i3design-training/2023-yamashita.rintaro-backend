@@ -261,3 +261,4 @@
 [2023-07-08 17:05:44]-[app] DEBUG: ログイン処理開始
 [2023-07-09 18:38:59]-[app] DEBUG: ログイン処理開始
 [2023-07-09 18:40:44]-[app] DEBUG: ログイン処理開始
+[2023-07-11 10:21:07]-[app] ERROR: エラー: SQLSTATE[23502]: Not null violation: 7 ERROR:  null value in column "id" of relation "categories" violates not-null constraint DETAIL:  Failing row contains (null, 仕事). (Connection: default, SQL: insert into "categories" ("name") values (仕事))

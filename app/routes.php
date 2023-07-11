@@ -25,5 +25,10 @@ return function (App $app) {
             $group->put('/{id}/edit', \App\Action\Task\TaskUpdateAction::class);
             $group->delete('/delete', \App\Action\Task\TaskDeleteAction::class);
         });
+
+        $group->group('/categories', function (Group $group) {
+            $group->get('', \App\Action\Category\CategoryListAction::class);
+            $group->post('/create', \App\Action\Category\CategoryCreateAction::class);
+        });
     });
 };
