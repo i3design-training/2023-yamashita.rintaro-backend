@@ -40,7 +40,7 @@ class TaskUpdateAction
 			$task->fill($decodedRequestBody);
 			$task->save();
 
-			Log::info('タスクの更新後: ' . print_r($task, true));
+			Log::info('タスクの更新後: ' . print_r($task->toArray(), true));
 
 			$response->getBody()->write(json_encode($task));
 
