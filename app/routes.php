@@ -22,8 +22,8 @@ return function (App $app) {
             $group->get('', \App\Action\Task\TaskListAction::class);
             $group->post('/create', \App\Action\Task\TaskCreateAction::class);
             $group->get('/{id}', \App\Action\Task\TaskDetailAction::class);
-            // $group->put('/{id}/edit', \App\Action\Task\TaskUpdateAction::class);
-            // $group->delete('/delete', \App\Action\Task\TaskDeleteAction::class);
+            $group->put('/{id}', \App\Action\Task\TaskUpdateAction::class);
+            $group->delete('/delete', \App\Action\Task\TaskDeleteAction::class);
         });
 
         $group->group('/categories', function (Group $group) {
