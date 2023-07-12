@@ -17,6 +17,6 @@ class TaskStatus extends Model
 
 	public function task()
 	{
-		return $this->hasOne('App\Models\Task');
+		return $this->hasMany('App\Models\Task');
 	}
 }
