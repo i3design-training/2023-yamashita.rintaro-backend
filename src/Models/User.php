@@ -40,4 +40,9 @@ class User extends Model
 	{
 		return $this->tasks()->get();
 	}
+
+	public function deleteToken()
+	{
+		return $this->token()->delete();
+	}
 }
