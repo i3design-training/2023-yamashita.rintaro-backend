@@ -15,6 +15,7 @@ return function (App $app) {
         $group->post('/users/provisionalRegister', \App\Action\User\UserProvisionalRegistrationAction::class);
         $group->get('/users/fullRegistration', \App\Action\User\UserFullRegistrationAction::class);
         $group->post('/users/login', \App\Action\User\UserLoginAction::class);
+        $group->post('/users/logout', \App\Action\User\UserLogoutAction::class);
         $group->get('/users/{username}', \App\Action\User\UserDetailAction::class);
         $group->put('/users/{username}/edit', \App\Action\User\UserUpdateAction::class);
 
