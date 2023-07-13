@@ -16,7 +16,7 @@ return function (App $app) {
         $group->get('/users/fullRegistration', \App\Action\User\UserFullRegistrationAction::class);
         $group->post('/users/login', \App\Action\User\UserLoginAction::class);
         $group->get('/users/{username}', \App\Action\User\UserDetailAction::class);
-        $group->put('/users/{username}', \App\Action\User\UserUpdateAction::class);
+        $group->put('/users/{username}/edit', \App\Action\User\UserUpdateAction::class);
 
         $group->group('/tasks', function (Group $group) {
             $group->get('', \App\Action\Task\TaskListAction::class);
