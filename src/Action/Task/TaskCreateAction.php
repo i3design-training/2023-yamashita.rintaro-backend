@@ -31,7 +31,7 @@ class TaskCreateAction
 				]
 			);
 
-			$response->getBody()->write($newTask);
+			$response->getBody()->write(json_encode($newTask));
 			return $response->withStatus(201);
 		} catch (\InvalidArgumentException $e) {
 			Log::error('無効な入力データ: ' . $e->getMessage());
