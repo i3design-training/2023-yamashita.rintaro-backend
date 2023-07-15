@@ -31,11 +31,11 @@ class Task extends Model
 
 	public function category()
 	{
-		return $this->belongsTo('App\Models\Category');
+		return $this->belongsTo('App\Models\Category', 'category_id');
 	}
 
-	public function status()
+	public function taskstatus()
 	{
-		return $this->belongsTo('App\Models\TaskStatus');
+		return $this->belongsTo('App\Models\TaskStatus', 'status_id');
 	}
 }
