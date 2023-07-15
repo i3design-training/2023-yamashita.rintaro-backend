@@ -23,15 +23,20 @@ class TaskDetailAction
 				throw new \InvalidArgumentException('タスクIDが必要です');
 			}
 
-			$task = Task::find($taskId);
+			// with(): LaravelのEloquent ORMにおけるEager Loading
+			// Eager LoadingでN+1問題解消
+			$task = Task::with(['category', 'taskstatus'])->find($taskId);
 
 			if (!$task) {
 				throw new Exception('指定されたIDのタスクは存在しません');
 			}
 
-			Log::info('タスク詳細取得: ' . $task->id);
+			// タスクのデータにカテゴリ名とタスクステータス名を追加
+			$taskDetails = $task->toArray();
+			$taskDetails['category_name'] = $task->category->name;
+			$taskDetails['taskstatus_name'] = $task->taskstatus->name;
 
-			$response->getBody()->write(json_encode($task));
+			$response->getBody()->write(json_encode($taskDetails));
 
 			return $response
 				->withHeader('Content-Type', 'application/json')

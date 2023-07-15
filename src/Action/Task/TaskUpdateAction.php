@@ -39,10 +39,15 @@ class TaskUpdateAction
 			// $fillable プロパティに指定された属性だけをマスアサインメント
 			$task->fill($decodedRequestBody);
 			$task->save();
-
 			Log::info('タスクの更新後: ' . print_r($task->toArray(), true));
 
-			$response->getBody()->write(json_encode($task));
+			$taskWithName = Task::with(['category', 'taskstatus'])->find($taskId);
+			// タスクのデータにカテゴリ名とタスクステータス名を追加
+			$taskDetails = $taskWithName->toArray();
+			$taskDetails['category_name'] = $taskWithName->category->name;
+			$taskDetails['taskstatus_name'] = $taskWithName->taskstatus->name;
+
+			$response->getBody()->write(json_encode($taskDetails));
 
 			return $response
 				->withHeader('Content-Type', 'application/json')
